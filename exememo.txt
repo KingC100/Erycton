@@ -1,0 +1,3 @@
+memo.
+exewrap.exe -i Erycton.ico -g Erycton.jar
+ƒAƒCƒRƒ“‚Å‚«‚ñ
