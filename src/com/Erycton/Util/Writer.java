@@ -31,14 +31,14 @@ public class Writer {
 	    file_Name = year + month + day + Const.FILE_TXT;
 	    
 	    // Beanに年月日を投げる.	    
-	    resultBean.setEntry_Time(year + "/" + month + "/" + day + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
+	    resultBean.setEntry_Time(year + File.separator + month + File.separator + day + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
 	    // DB挿入時は"yyyy-MM-dd HH:mm:ss"
 //	    resultBean.setEntry_Time(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + "(" + dow + ")");
 	    
 	    String dir_path = Const.EXPORT_PATH + battle_Type;
 	    File dir		= new File(dir_path);
 	    // ファイルオブジェクト作成.
-	    File fl =  new File(dir_path + "/" + file_Name);
+	    File fl =  new File(dir_path + File.separator + file_Name);
 
 	    // 既に同名ファイルが存在する場合は既存ファイルへ書き込み.
 	    if(fl.exists()){
@@ -82,6 +82,8 @@ public class Writer {
 		String bar = reader.propReader(Const.EXPORT_PARTITION_BAR);
 		String str   = null;
 		StringBuffer sb = new StringBuffer();
+		// 改行文字の取得
+		String crlf = Util.GetSeparator();
 
 		// 同名ファイルが存在しない場合テンプレートを追加.
 		if(orFirst){
@@ -129,8 +131,8 @@ public class Writer {
 		sb.append(resultBean.getEntry_Time());
 		
 		// 区切り線
-		sb.append("\n");
-		sb.append( bar + "\n");
+		sb.append(crlf);
+		sb.append( bar + crlf);
 
 		
 		str = sb.toString();
