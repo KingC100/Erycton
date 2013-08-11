@@ -52,8 +52,8 @@ public class Writer {
 	    	fl.createNewFile();
 	    }
 	    
-	    FileOutputStream fos = new FileOutputStream(fl);
-	    OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+	    FileOutputStream fos = new FileOutputStream(fl,true);
+	    OutputStreamWriter osw = new OutputStreamWriter(fos, Const.ENCODE);
 	    osw.write(Create_Sentence(orFirst, resultBean));
 	    osw.flush();
 	    osw.close();
@@ -83,8 +83,8 @@ public class Writer {
 		// 同名ファイルが存在しない場合テンプレートを追加.
 		if(orFirst){
 		}else{
-			sb.append(Const.TOP_ITEMNAME + "\n");
-			sb.append( bar + "\n");
+			sb.append(Const.TOP_ITEMNAME + crlf);
+			sb.append( bar + crlf);
 		}
 
 		// 入力データの書き込み.

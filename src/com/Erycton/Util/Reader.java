@@ -49,7 +49,7 @@ public String propReader(String prop_Name) {
 	String path =  null;	// 対象ファイルのパス
 	try {
 			// InputStreamオブジェクト作成.
-		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(Const.PROPERTIES_PATH), "UTF-8"));
+		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(Const.PROPERTIES_PATH), Const.ENCODE));
 
 			// 読み込み.
 			configuration.load(in);
