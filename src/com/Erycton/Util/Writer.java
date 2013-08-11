@@ -1,18 +1,16 @@
 package com.Erycton.Util;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import com.Erycton.Data.ResultBean;
 
 
 public class Writer {
 	public boolean Export(ResultBean resultBean){
-		
+
 	    boolean bl = false;
 		try{
-	    
+
 	    Util util = new Util();
 	    boolean orFirst = false;	    
 	    String file_Name, battle_Type;
@@ -29,12 +27,12 @@ public class Writer {
 
 	    // 出力ファイル名作成.
 	    file_Name = year + month + day + Const.FILE_TXT;
-	    
+
 	    // Beanに年月日を投げる.	    
 	    resultBean.setEntry_Time(year + File.separator + month + File.separator + day + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
 	    // DB挿入時は"yyyy-MM-dd HH:mm:ss"
 //	    resultBean.setEntry_Time(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + "(" + dow + ")");
-	    
+
 	    String dir_path = Const.EXPORT_PATH + battle_Type;
 	    File dir		= new File(dir_path);
 	    // ファイルオブジェクト作成.
@@ -54,15 +52,12 @@ public class Writer {
 	    	fl.createNewFile();
 	    }
 	    
-	    // FileWriterオブジェクト作成
-	    FileWriter fw = new FileWriter(fl, true);
-	    
-	    // 書き込み.
-	    fw.write(Create_Sentence(orFirst, resultBean));
-	    
-	    // close.
-	    fw.close();
-	    
+	    FileOutputStream fos = new FileOutputStream(fl);
+	    OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+	    osw.write(Create_Sentence(orFirst, resultBean));
+	    osw.flush();
+	    osw.close();
+
 	    // 成功.
 	    bl = true;
 	    return bl;
@@ -73,7 +68,7 @@ public class Writer {
 		}
 	    return bl;
 	}
-	
+
 	// 書き込み文の作成.
 	public String Create_Sentence(boolean orFirst, ResultBean resultBean){
 		Util util = new Util();
@@ -91,13 +86,13 @@ public class Writer {
 			sb.append(Const.TOP_ITEMNAME + "\n");
 			sb.append( bar + "\n");
 		}
-		
+
 		// 入力データの書き込み.
 		sb.append(resultBean.getRival_Name());
 		sb.append( sps );
 		sb.append(resultBean.getRival_Rate());
 		sb.append( sps );
-		
+
 		sb.append(resultBean.getRival_Show_1());
 		sb.append( sps );
 		sb.append(resultBean.getRival_Show_2());
@@ -110,34 +105,34 @@ public class Writer {
 		sb.append( sps );
 		sb.append(resultBean.getRival_Show_6());
 		sb.append( sps );
-		
+
 		sb.append(resultBean.getElect_Me_1());
 		sb.append( sps );
 		sb.append(resultBean.getElect_Me_2());
 		sb.append( sps );
 		sb.append(resultBean.getElect_Me_3());
 		sb.append( sps );
-		
+
 		sb.append(resultBean.getElect_Rival_1());
 		sb.append( sps );
 		sb.append(resultBean.getElect_Rival_2());
 		sb.append( sps );
 		sb.append(resultBean.getElect_Rival_3());
 		sb.append( sps );
-		
+
 		sb.append(util.ConvertResult(resultBean));
 //		sb.append(resultBean.getResult());
 		sb.append( sps );
 		sb.append(resultBean.getEntry_Time());
-		
+
 		// 区切り線
 		sb.append(crlf);
 		sb.append( bar + crlf);
 
-		
+
 		str = sb.toString();
-		
+
 		return str;
 	}
-	
+
 }
