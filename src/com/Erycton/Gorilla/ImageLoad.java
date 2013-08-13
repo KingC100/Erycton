@@ -12,10 +12,10 @@ public class ImageLoad {
 		String import_path = null;
 		
 		// 引数に対応した番号のファイル名を取得.
-		pkmn_num = Get_Number("test");
+		pkmn_num = Get_Number(pkmn_name);
 		
 		import_path = reader.propReader(Const.POKEMON_IMAGE_PATH);
-		
+				
 		// 番号ファイルのパスを作成.
 		img_path = import_path + pkmn_num + Const.FILE_PNG;
 		
@@ -24,11 +24,19 @@ public class ImageLoad {
 	}
 	
 	protected Integer Get_Number(String name){
-		Integer i = 1;
+		Integer i = 0;
+		Reader reader = new Reader();
+		String ary_pkmn[] = reader.txtReader();
 		
+		// 対象ポケモン名がpokemon_name.txtに存在するか確認
+		for (String t:ary_pkmn){
+			if (name.equals(t)){
+				break;
+			}
+			i++;
+		}	
 		
-		
-		return i;
+		return i + 1;
 	}
 	
 }
