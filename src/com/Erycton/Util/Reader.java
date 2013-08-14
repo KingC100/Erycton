@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Reader {
 
-public String[] txtReader() {
+public String[] txtReader(String type) {
     FileReader stream = null;
     LineNumberReader lnr = null;
     String name[] = null;
@@ -19,7 +19,7 @@ public String[] txtReader() {
 
     try {
     		// Propertiesファイルから読み込み.
-    		stream = new FileReader(propReader(Const.POKEMONNAME));
+    		stream = new FileReader(propReader(type));
     		
     		// LineNumberReaderオブジェクト作成.
     		lnr = new LineNumberReader(stream);
@@ -49,7 +49,7 @@ public String propReader(String prop_Name) {
 	String path =  null;	// 対象ファイルのパス
 	try {
 			// InputStreamオブジェクト作成.
-		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(Const.PROPERTIES_PATH), Const.ENCODE));
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(Const.PROPERTIES_PATH), Const.ENCODE));
 
 			// 読み込み.
 			configuration.load(in);
