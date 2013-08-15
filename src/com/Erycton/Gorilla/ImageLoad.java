@@ -1,7 +1,5 @@
 package com.Erycton.Gorilla;
 
-import java.io.File;
-
 import javax.swing.ImageIcon;
 
 import com.Erycton.Util.*;
@@ -40,36 +38,34 @@ public class ImageLoad {
 			i++;
 		}	
 		
-//		if (name.equals(Const.HATENA)){
-//			return 0;
-//		}
-		
 		return i + 1;
 	}
 	
+	// アイコンを取得.
 	public ImageIcon GetImage(String txt){
 		
 		ImageLoad imageLoad 	= new ImageLoad();
 		String frm_chg = FormeChange(txt);
 		ImageIcon icn = null;
 		
-		
 		if (frm_chg.equals(Const.NOT_FIND)){
 			icn	= new ImageIcon(imageLoad.Load(txt));
 		}else{
 			icn	= new ImageIcon(frm_chg);
 		}
-		
+
+		// 対応した数字が無い場合は？表示.
+		Reader reader = new Reader();
 		Integer hatena_normal = Get_Number(txt, Const.POKEMONNAME_NORMAL);
 		Integer hatena_forme = Get_Number(txt, Const.POKEMONNAME_FORME);
-		if(hatena_normal >= Const.NUMBERMAX_NORMAL
-				&& hatena_forme >= Const.NUMBERMAX_FORME){
+		Integer normal_max = Integer.parseInt(reader.propReader(Const.NORMAL_MAX));
+		Integer forme_max  = Integer.parseInt(reader.propReader(Const.FORME_MAX));
+		
+		if(hatena_normal >= normal_max
+				&& hatena_forme >= forme_max){
 			icn = new ImageIcon(Const.HATENA_PATH);
 		}
 		
-		
-		// アイコンを取得
-//		ImageIcon icn	= new ImageIcon(imageLoad.Load(txt));
 		return icn;
 		
 	}
@@ -104,7 +100,7 @@ public class ImageLoad {
 		import_path = reader.propReader(Const.POKEMON_IMAGE_PATH);
 				
 		// 番号ファイルのパスを作成.
-		img_path = import_path + Const.DIR_FRM + File.separator + pkmn_num + Const.FILE_PNG;
+		img_path = import_path + Const.DIR_FRM + pkmn_num + Const.FILE_PNG;
 		
 		return img_path;
 	
