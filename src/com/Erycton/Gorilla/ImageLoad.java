@@ -40,6 +40,10 @@ public class ImageLoad {
 			i++;
 		}	
 		
+//		if (name.equals(Const.HATENA)){
+//			return 0;
+//		}
+		
 		return i + 1;
 	}
 	
@@ -49,11 +53,20 @@ public class ImageLoad {
 		String frm_chg = FormeChange(txt);
 		ImageIcon icn = null;
 		
+		
 		if (frm_chg.equals(Const.NOT_FIND)){
 			icn	= new ImageIcon(imageLoad.Load(txt));
 		}else{
 			icn	= new ImageIcon(frm_chg);
 		}
+		
+		Integer hatena_normal = Get_Number(txt, Const.POKEMONNAME_NORMAL);
+		Integer hatena_forme = Get_Number(txt, Const.POKEMONNAME_FORME);
+		if(hatena_normal >= Const.NUMBERMAX_NORMAL
+				&& hatena_forme >= Const.NUMBERMAX_FORME){
+			icn = new ImageIcon(Const.HATENA_PATH);
+		}
+		
 		
 		// アイコンを取得
 //		ImageIcon icn	= new ImageIcon(imageLoad.Load(txt));
@@ -84,7 +97,6 @@ public class ImageLoad {
 		if(!(find)){
 			return Const.NOT_FIND;
 		}
-
 		
 		// 引数に対応した番号のファイル名を取得.
 		pkmn_num = Get_Number(name, Const.POKEMONNAME_FORME);
