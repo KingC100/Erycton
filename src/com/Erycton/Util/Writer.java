@@ -1,6 +1,9 @@
 package com.Erycton.Util;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import com.Erycton.Data.ResultBean;
 
@@ -29,7 +32,7 @@ public class Writer {
 	    file_Name = year + month + day + Const.FILE_TXT;
 
 	    // Beanに年月日を投げる.	    
-	    resultBean.setEntry_Time(year + File.separator + month + File.separator + day + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
+	    resultBean.setEntry_Time(year + Const.NEN + month + Const.GETSU + day + Const.HI + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
 	    // DB挿入時は"yyyy-MM-dd HH:mm:ss"
 //	    resultBean.setEntry_Time(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + "(" + dow + ")");
 
