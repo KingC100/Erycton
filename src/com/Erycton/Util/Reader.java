@@ -3,7 +3,6 @@ package com.Erycton.Util;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -12,17 +11,18 @@ import java.util.Properties;
 public class Reader {
 
 public String[] txtReader(String type) {
-    FileReader stream = null;
+//    FileReader stream = null;
     LineNumberReader lnr = null;
     String name[] = null;
     String line;
 
     try {
+
     		// Propertiesファイルから読み込み.
-    		stream = new FileReader(propReader(type));
-    		
+    		FileInputStream fis = new FileInputStream(propReader(type));
+    		InputStreamReader in = new InputStreamReader(fis, Const.ENCODE);
     		// LineNumberReaderオブジェクト作成.
-    		lnr = new LineNumberReader(stream);
+    		lnr = new LineNumberReader(in);
 
     		// ファイル(pokemon_name.txt)からポケモン名の取得.
       		while ((line = lnr.readLine()) != null) {
@@ -31,7 +31,9 @@ public String[] txtReader(String type) {
       			}
       		
       		// close.
-  			stream.close();
+      		fis.close();
+      		lnr.close();
+      		
   			return name;
   			
     		} catch (IOException e) {
