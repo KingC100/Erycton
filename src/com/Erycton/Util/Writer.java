@@ -7,9 +7,8 @@ import java.io.OutputStreamWriter;
 
 import com.Erycton.Data.ResultBean;
 
-
 public class Writer {
-	public boolean Export(ResultBean resultBean){
+	public boolean Export(ResultBean resultBean, Boolean type){
 
 	    boolean bl = false;
 		try{
@@ -17,7 +16,11 @@ public class Writer {
 	    Util util = new Util();
 	    boolean orFirst = false;	    
 	    String file_Name, battle_Type;
-	    battle_Type = Const.SINGLE;
+	    if(type){
+	    	battle_Type = Const.DOUBLE;
+	    }else{
+	    	battle_Type = Const.SINGLE;
+	    }
 
 	    // 日付取得.
 	    String year   = util.getDate(Const.YEAR);
@@ -57,7 +60,7 @@ public class Writer {
 	    
 	    FileOutputStream fos = new FileOutputStream(fl,true);
 	    OutputStreamWriter osw = new OutputStreamWriter(fos, Const.ENCODE);
-	    osw.write(Create_Sentence(orFirst, resultBean));
+	    osw.write(Create_Sentence(orFirst, resultBean, type));
 	    osw.flush();
 	    osw.close();
 
@@ -73,10 +76,10 @@ public class Writer {
 	}
 
 	// 書き込み文の作成.
-	public String Create_Sentence(boolean orFirst, ResultBean resultBean){
+	public String Create_Sentence(boolean orFirst, ResultBean resultBean, Boolean type){
 		Util util = new Util();
 		Reader reader = new Reader();
-		String sps = reader.propReader(Const.EXPORT_PARTITION);
+		String sps = reader.propReader(Const.EXPORT_PARTITION) + Const.str_null; // Const.TAB
 		String bar = reader.propReader(Const.EXPORT_PARTITION_BAR);
 		String str   = null;
 		StringBuffer sb = new StringBuffer();
@@ -86,7 +89,11 @@ public class Writer {
 		// 同名ファイルが存在しない場合テンプレートを追加.
 		if(orFirst){
 		}else{
-			sb.append(Const.TOP_ITEMNAME + crlf);
+			if(type){
+				sb.append(Const.TOP_ITEMNAME_DOUBLE + crlf);
+			}else{
+				sb.append(Const.TOP_ITEMNAME_SINGLE + crlf);
+			}
 			sb.append( bar + crlf);
 		}
 
@@ -115,6 +122,10 @@ public class Writer {
 		sb.append( sps );
 		sb.append(resultBean.getElect_Me_3());
 		sb.append( sps );
+		if(type){
+			sb.append(resultBean.getElect_Me_4());
+			sb.append( sps );
+		}
 
 		sb.append(resultBean.getElect_Rival_1());
 		sb.append( sps );
@@ -122,9 +133,12 @@ public class Writer {
 		sb.append( sps );
 		sb.append(resultBean.getElect_Rival_3());
 		sb.append( sps );
+		if(type){
+			sb.append(resultBean.getElect_Rival_4());
+			sb.append( sps );
+		}
 
 		sb.append(util.ConvertResult(resultBean));
-//		sb.append(resultBean.getResult());
 		sb.append( sps );
 		sb.append(resultBean.getEntry_Time());
 
@@ -137,5 +151,40 @@ public class Writer {
 
 		return str;
 	}
+	
+	// Propertiesファイルの読み込み.
+	public Boolean propWriter(String prop_Name, Boolean prop_Content) {
+
+		Boolean bl = false;
+//		
+//		try {
+////				Properties prop = new Properties();
+//				FileOutputStream fos = new FileOutputStream(Const.PROPERTIES_PATH);
+//				
+//				String res = null;
+//				if (prop_Content){
+//					res = Const.SINGLE;
+//				}else{
+//					res = Const.DOUBLE;
+//				}
+//				
+//				PropertiesConfiguration config = new PropertiesConfiguration(Const.PROPERTIES_PATH);
+//				config.addProperty(prop_Name, res);
+//				config.save();
+//				fos.close();
+//				
+//				bl = true;
+//			
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (ConfigurationException e) {
+//				e.printStackTrace();
+//			}
+		
+		return bl;
+		}
 
 }

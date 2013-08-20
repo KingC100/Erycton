@@ -21,25 +21,15 @@ public class ImageLoad {
 				
 		// 番号ファイルのパスを作成.
 		img_path = import_path + pkmn_num + Const.FILE_PNG;
-
-//		System.out.println("Load : pkmn_name : " + pkmn_name + "\n");
-//		System.out.println("Load : pkmn_num   : " + pkmn_num + "\n");
-//		System.out.println("Load : img_path : " + img_path + "\n");
 		
 		return img_path;
-		
 	}
 	
 	protected Integer Get_Number(String name, String type){
 		Integer i = 0;
 		Reader reader = new Reader();
 		String ary_pkmn[] = reader.txtReader(type);
-		
-//		System.out.println("Get_Number : name : " + name + "\n");
-		
-		System.out.println("Get_Number : type : " + type + "\n");
 
-		System.out.println("Get_Number : ary_pkmn[] : " + ary_pkmn.length + "\n");
 			
 		// 対象ポケモン名がpokemon_name.txtに存在するか確認
 		for (String t:ary_pkmn){
@@ -48,9 +38,6 @@ public class ImageLoad {
 			}
 			i++;
 		}	
-
-		System.out.println("Get_Number : i : " + i+ "\n");
-		System.out.println("Get_Number : name : " + name + "\n");
 		return i + 1;
 	}
 	
@@ -60,9 +47,6 @@ public class ImageLoad {
 		ImageLoad imageLoad 	= new ImageLoad();
 		String frm_chg = FormeChange(txt);
 		ImageIcon icn = null;
-
-//		System.out.println("GetImage : txt : " + txt + "\n");
-		
 		
 		if (frm_chg.equals(Const.NOT_FIND)){
 			icn	= new ImageIcon(imageLoad.Load(txt));
@@ -81,14 +65,7 @@ public class ImageLoad {
 				&& hatena_forme >= forme_max){
 				icn = new ImageIcon(Const.HATENA_PATH);
 		}
-		
-//		System.out.println("GetImage : hatena_normal : " + hatena_normal + "\n");
-//		System.out.println("GetImage : hatena_forme   : " + hatena_forme + "\n");
-//		System.out.println("GetImage : normal_max : " + normal_max + "\n");
-//		System.out.println("GetImage : forme_max : " + forme_max + "\n");
-		
-		return icn;
-		
+	return icn;
 	}
 	
 	protected String FormeChange(String name){
