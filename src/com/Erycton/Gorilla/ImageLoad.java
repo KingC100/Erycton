@@ -48,8 +48,10 @@ public class ImageLoad {
 		String frm_chg = FormeChange(txt);
 		ImageIcon icn = null;
 		
+		String imgpath = imageLoad.Load(txt);
+		
 		if (frm_chg.equals(Const.NOT_FIND)){
-			icn	= new ImageIcon(imageLoad.Load(txt));
+			icn	= new ImageIcon(imgpath);
 		}else{
 			icn	= new ImageIcon(frm_chg);
 		}
@@ -63,7 +65,7 @@ public class ImageLoad {
 		
 		if(hatena_normal >= normal_max
 				&& hatena_forme >= forme_max){
-				icn = new ImageIcon(Const.HATENA_PATH);
+				icn = new ImageIcon(reader.propReader(Const.HATENA_PATH));
 		}
 	return icn;
 	}
