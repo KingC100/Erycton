@@ -18,3 +18,7 @@
 	└ ?アイコンのパスもpropertiesファイルから取得するよう修正.
 2. ウィンドウアイコンの設定.
 
+2013/08/22, 1:25
+1. Mac,Windowsでアイコンの設定→無理でした。
+2. readme.txt作成
+3. Dropbox上で公開(https://www.dropbox.com/sh/webyeh0uoe6mqw2/o8Z58g1HVW)
