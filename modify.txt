@@ -22,3 +22,8 @@
 1. Mac,Windowsでアイコンの設定→無理でした。
 2. readme.txt作成
 3. Dropbox上で公開(https://www.dropbox.com/sh/webyeh0uoe6mqw2/o8Z58g1HVW)
+
+2013/08/22, 21:56
+1. 切替時にテキストボックス4を空にするよう変更.
+2. 入力チェックが動作しない不具合の修正.
+3. Gorilla.java,Check.javaのリファクタリング
