@@ -11,62 +11,65 @@ public class Writer {
 	public boolean Export(ResultBean resultBean, Boolean type){
 
 	    boolean bl = false;
-		try{
+		
+	    try{
 
-	    Util util = new Util();
-	    boolean orFirst = false;	    
-	    String file_Name, battle_Type;
-	    if(type){
-	    	battle_Type = Const.DOUBLE;
-	    }else{
-	    	battle_Type = Const.SINGLE;
-	    }
+			Util util = new Util();
+			boolean orFirst = false;	    
+			String file_Name, battle_Type;
+			
+			if(type){
+				battle_Type = Const.DOUBLE;
+			}else{
+				battle_Type = Const.SINGLE;
+			}
+			
+			// 日付取得.
+			String[] dt = util.getDate();
+			String year	 = dt[0];
+			String month  = dt[1];
+			String day	 	 = dt[2];
+			String dow		 = dt[3];
+			String hour 	 = dt[4];
+			String minute = dt[5];
+			String second	 = dt[6];
 
-	    // 日付取得.
-	    String year   = util.getDate(Const.YEAR);
-	    String month  = util.getDate(Const.MONTH);
-	    String day	  = util.getDate(Const.DAY);
-	    String hour	  = util.getDate(Const.HOUR);
-	    String minute = util.getDate(Const.MINUTE);
-	    String second = util.getDate(Const.SECOND);
-	    String dow	  = util.getDate(Const.WEEK);
+			// 出力ファイル名作成.
+			file_Name = year + month + day + Const.FILE_TXT;
 
-	    // 出力ファイル名作成.
-	    file_Name = year + month + day + Const.FILE_TXT;
-
-	    // Beanに年月日を投げる.	    
-	    resultBean.setEntry_Time(year + Const.NEN + month + Const.GETSU + day + Const.HI + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
-	    // DB挿入時は"yyyy-MM-dd HH:mm:ss"
-//	    resultBean.setEntry_Time(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + "(" + dow + ")");
-
-	    String dir_path = Const.EXPORT_PATH + battle_Type;
-	    File dir		= new File(dir_path);
-	    // ファイルオブジェクト作成.
-	    File fl =  new File(dir_path + File.separator + file_Name);
-
-	    // 既に同名ファイルが存在する場合は既存ファイルへ書き込み.
-	    if(fl.exists()){
-	    	orFirst = true;
-	    }else{
-	    	// ファイルが存在しない場合, フォルダが存在するか確認.
-	    	if(dir.exists()){
-	    		}else{
-	    		// フォルダを再帰的に作成.
-	    		dir.mkdirs();
-	    	}
-	    	// ファイル作成.
-	    	fl.createNewFile();
-	    }
-	    
-	    FileOutputStream fos = new FileOutputStream(fl,true);
-	    OutputStreamWriter osw = new OutputStreamWriter(fos, Const.ENCODE);
-	    osw.write(Create_Sentence(orFirst, resultBean, type));
-	    osw.flush();
-	    osw.close();
-
-	    // 成功.
-	    bl = true;
-	    return bl;
+			// Beanに年月日を投げる.	    
+			resultBean.setEntry_Time(year + Const.NEN + month + Const.GETSU + day + Const.HI + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
+			
+			// ディレクトリパス取得.
+			String dir_path	= Const.EXPORT_PATH + battle_Type;
+			File dir				= new File(dir_path);
+			File fl					=  new File(dir_path + File.separator + file_Name);
+			
+			// 既に同名ファイルが存在する場合は既存ファイルへ書き込み.
+			if(fl.exists()){
+				orFirst = true;
+			}else{
+				// ファイルが存在しない場合, フォルダが存在するか確認.
+				if(dir.exists()){
+				}else{
+					// フォルダを再帰的に作成.
+					dir.mkdirs();
+				}
+				// ファイル作成.
+				fl.createNewFile();
+			}	
+			
+			FileOutputStream fos = new FileOutputStream(fl,true);
+			OutputStreamWriter osw = new OutputStreamWriter(fos, Const.ENCODE); // UTF-8.
+			// 書き込み.
+			osw.write(Create_Sentence(orFirst, resultBean, type));
+			// 出力して閉じる.
+			osw.close();
+			
+			// 成功.
+			bl = true;
+			return bl;
+			
 		} catch(IOException e){
 			e.printStackTrace();
 		} catch(Exception e){
@@ -75,26 +78,33 @@ public class Writer {
 	    return bl;
 	}
 
-	// 書き込み文の作成.
+	/***
+	 * 出力内容の作成.
+	 * @param orFirst - ファイルが既存か
+	 * @param resultBean - 入力内容
+	 * @param type - 対戦種別
+	 * @return
+	 */
 	public String Create_Sentence(boolean orFirst, ResultBean resultBean, Boolean type){
+		
 		Util util = new Util();
 		Reader reader = new Reader();
 		String sps = reader.propReader(Const.EXPORT_PARTITION) + Const.str_null; // Const.TAB
 		String bar = reader.propReader(Const.EXPORT_PARTITION_BAR);
 		String str   = null;
 		StringBuffer sb = new StringBuffer();
-		// 改行文字の取得
+		
+		// 改行文字の取得.
 		String crlf = Util.GetSeparator();
 
 		// 同名ファイルが存在しない場合テンプレートを追加.
-		if(orFirst){
-		}else{
+		if(!(orFirst)){
 			if(type){
 				sb.append(Const.TOP_ITEMNAME_DOUBLE + crlf);
 			}else{
 				sb.append(Const.TOP_ITEMNAME_SINGLE + crlf);
 			}
-			sb.append( bar + crlf);
+			sb.append(bar + crlf);
 		}
 
 		// 入力データの書き込み.
@@ -122,6 +132,8 @@ public class Writer {
 		sb.append( sps );
 		sb.append(resultBean.getElect_Me_3());
 		sb.append( sps );
+		
+		// 自分選出4枠目.
 		if(type){
 			sb.append(resultBean.getElect_Me_4());
 			sb.append( sps );
@@ -133,6 +145,8 @@ public class Writer {
 		sb.append( sps );
 		sb.append(resultBean.getElect_Rival_3());
 		sb.append( sps );
+
+		// 相手選出4枠目.
 		if(type){
 			sb.append(resultBean.getElect_Rival_4());
 			sb.append( sps );
@@ -151,40 +165,5 @@ public class Writer {
 
 		return str;
 	}
-	
-	// Propertiesファイルの読み込み.
-	public Boolean propWriter(String prop_Name, Boolean prop_Content) {
-
-		Boolean bl = false;
-//		
-//		try {
-////				Properties prop = new Properties();
-//				FileOutputStream fos = new FileOutputStream(Const.PROPERTIES_PATH);
-//				
-//				String res = null;
-//				if (prop_Content){
-//					res = Const.SINGLE;
-//				}else{
-//					res = Const.DOUBLE;
-//				}
-//				
-//				PropertiesConfiguration config = new PropertiesConfiguration(Const.PROPERTIES_PATH);
-//				config.addProperty(prop_Name, res);
-//				config.save();
-//				fos.close();
-//				
-//				bl = true;
-//			
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			} catch (ConfigurationException e) {
-//				e.printStackTrace();
-//			}
-		
-		return bl;
-		}
 
 }

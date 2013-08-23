@@ -1,5 +1,4 @@
 package com.Erycton.Util;
-//import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,17 +9,23 @@ import java.util.Properties;
 
 public class Reader {
 
-public String[] txtReader(String type) {
-//    FileReader stream = null;
-    LineNumberReader lnr = null;
-    String name[] = null;
-    String line;
+	/***
+	 * ポケモン名取得(通常, フォルムチェンジ)
+	 * @param type - 戦闘種別
+	 * @return name - ポケモン名(配列)
+	 */
+	public String[] txtReader(String type) {
+		//    FileReader stream = null;
+		String name[] = null;
+		String line;
 
-    try {
+		try {
 
-    		// Propertiesファイルから読み込み.
+			// Propertiesファイルから読み込み.
+    		LineNumberReader lnr = null;
     		FileInputStream fis = new FileInputStream(propReader(type));
     		InputStreamReader in = new InputStreamReader(fis, Const.ENCODE);
+    		
     		// LineNumberReaderオブジェクト作成.
     		lnr = new LineNumberReader(in);
 
@@ -33,8 +38,6 @@ public String[] txtReader(String type) {
       		// close.
       		fis.close();
       		lnr.close();
-      		
-  			return name;
   			
     		} catch (IOException e) {
     			e.printStackTrace();
@@ -45,30 +48,35 @@ public String[] txtReader(String type) {
 	return name;
 	}
 
-// Propertiesファイルの読み込み.
-public String propReader(String prop_Name) {
-	Properties configuration = new Properties();
-	String path =  null;	// 対象ファイルのパス
-	try {
+	/***
+	 * プロパティファイルから情報を取得.
+	 * @param prop_Name - 取得するプロパティファイル名
+	 * @return path - 
+	 */
+	public String propReader(String prop_Name) {
+		
+		Properties prop = new Properties();
+		String content =  null;
+
+		try {
+			
 			// InputStreamオブジェクト作成.
-			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(Const.PROPERTIES_PATH), Const.ENCODE));
+			BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(Const.PROPERTIES_PATH), Const.ENCODE));
 
 			// 読み込み.
-			configuration.load(in);
+			prop.load(bf);
 
 			// 対象パス情報を取得.
-			path = (configuration.getProperty(prop_Name));
+			content = (prop.getProperty(prop_Name));
 			
-			in.close();
-			
-			return path;
-		
+			bf.close();
+					
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	return path;
+	return content;
 	}
 }
