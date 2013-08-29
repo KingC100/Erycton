@@ -8,60 +8,6 @@ import com.Erycton.Util.Reader;
 public class ImageLoad {
 
 	/***
-	 * アイコンのパスを取得します.
-	 * @param pkmn_name - ポケモンの名前.
-	 * @return img_path - アイコンのパス.
-	 */
-	public String Load (String pkmn_name) {
-		
-		Reader reader = new Reader();
-		String img_path = null;
-		Integer pkmn_num = null; 
-		String import_path = null;
-		
-		try{
-		
-			// 引数に対応した番号のファイル名を取得.
-			pkmn_num = Get_Number(pkmn_name, Const.POKEMONNAME_NORMAL);	
-			// imgフォルダのパスを取得.
-			import_path = reader.propReader(Const.POKEMON_IMAGE_PATH);
-			// アイコンファイルのパスを作成.
-			img_path = import_path + pkmn_num + Const.FILE_PNG;
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return img_path;
-	}
-	
-	/**
-	 * アイコンの番号を取得します.
-	 * @param name - ポケモン名
-	 * @param type   - 対戦種別
-	 * @return アイコンの番号
-	 */
-	protected Integer Get_Number(String name, String type){
-		Integer i = 0;
-		Reader reader = new Reader();
-		String ary_pkmn[] = reader.txtReader(type);
-
-		try{
-			// 対象ポケモン名がpokemon_name.txtに存在するか確認
-			for (String t:ary_pkmn){
-				if (name.equals(t)){
-					// 見つかったら抜ける.
-					break;
-				}
-				i++;
-			}
-			
-		} catch(Exception e){
-			e.printStackTrace();
-		}
-		return i + 1;
-	}
-	
-	/***
 	 * アイコンを取得します.
 	 * @param txt - ポケモン名
 	 * @return icn  - ポケモン名に対応したアイコン
@@ -104,7 +50,62 @@ public class ImageLoad {
 		}
 		return icn;
 	}
-	
+
+	/**
+	 * アイコンの番号を取得します.
+	 * @param name - ポケモン名
+	 * @param type   - 対戦種別
+	 * @return アイコンの番号
+	 */
+	protected Integer Get_Number(String name, String type){
+		Integer i = 0;
+		Reader reader = new Reader();
+		String ary_pkmn[] = reader.txtReader(type);
+
+		try{
+			// 対象ポケモン名がpokemon_name.txtに存在するか確認
+			for (String t:ary_pkmn){
+				if (name.equals(t)){
+					// 見つかったら抜ける.
+					break;
+				}
+				i++;
+			}
+			
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return i + 1;
+	}
+
+
+	/***
+	 * 通常アイコンのパスを取得します.
+	 * @param pkmn_name - ポケモンの名前.
+	 * @return img_path - アイコンのパス.
+	 */
+	public String Load (String pkmn_name) {
+		
+		Reader reader = new Reader();
+		String img_path = null;
+		Integer pkmn_num = null; 
+		String import_path = null;
+		
+		try{
+		
+			// 引数に対応した番号のファイル名を取得.
+			pkmn_num = Get_Number(pkmn_name, Const.POKEMONNAME_NORMAL);	
+			// imgフォルダのパスを取得.
+			import_path = reader.propReader(Const.POKEMON_IMAGE_PATH);
+			// アイコンファイルのパスを作成.
+			img_path = import_path + pkmn_num + Const.FILE_PNG;
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return img_path;
+	}
+		
 	/***
 	 * フォルムチェンジアイコン取得.
 	 * @param name - ポケモン名

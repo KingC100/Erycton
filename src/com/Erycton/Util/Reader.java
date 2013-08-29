@@ -15,6 +15,7 @@ public class Reader {
 	 * @return name - ポケモン名(配列)
 	 */
 	public String[] txtReader(String type) {
+
 		//    FileReader stream = null;
 		String name[] = null;
 		String line;
@@ -44,7 +45,6 @@ public class Reader {
       		} catch (Exception e) {
     			e.printStackTrace();
       		}
-    	
 	return name;
 	}
 

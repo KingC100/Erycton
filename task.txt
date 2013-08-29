@@ -61,3 +61,7 @@ x1. readme.txtの修正
 	└ 「動かんかったらlogと事象メモってくださいとか」
 x2. "春シキジカ"入力で入力エラーになる問題の修正.
 	└SSとか/harusikijika.png
+
+2013/08/29, 16:30
+1. 起動時に必要なファイルが配置されてない場合エラー表示の機能.
+	└必要なファイル(./conf/Erycton.properties、poketxt/pokemon_name.txt, forme_change.txt)

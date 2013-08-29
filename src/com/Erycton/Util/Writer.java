@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import com.Erycton.Data.ResultBean;
 
 public class Writer {
+
 	public boolean Export(ResultBean resultBean, Boolean type){
 
 	    boolean bl = false;
@@ -89,9 +90,9 @@ public class Writer {
 		
 		Util util = new Util();
 		Reader reader = new Reader();
-		String sps = reader.propReader(Const.EXPORT_PARTITION) + Const.str_null; // Const.TAB
-		String bar = reader.propReader(Const.EXPORT_PARTITION_BAR);
-		String str   = null;
+		String sps	= reader.propReader(Const.EXPORT_PARTITION) + Const.str_null; // Const.TAB
+		String bar  = reader.propReader(Const.EXPORT_PARTITION_BAR);
+		String str  = null;
 		StringBuffer sb = new StringBuffer();
 		
 		// 改行文字の取得.
@@ -99,11 +100,13 @@ public class Writer {
 
 		// 同名ファイルが存在しない場合テンプレートを追加.
 		if(!(orFirst)){
+			// 対戦種別によって挿入テンプレートを変更.
 			if(type){
 				sb.append(Const.TOP_ITEMNAME_DOUBLE + crlf);
 			}else{
 				sb.append(Const.TOP_ITEMNAME_SINGLE + crlf);
 			}
+			// 区切り棒,改行
 			sb.append(bar + crlf);
 		}
 
@@ -156,10 +159,9 @@ public class Writer {
 		sb.append( sps );
 		sb.append(resultBean.getEntry_Time());
 
-		// 区切り線
+		// 区切り線(-----)
 		sb.append(crlf);
 		sb.append( bar + crlf);
-
 
 		str = sb.toString();
 
