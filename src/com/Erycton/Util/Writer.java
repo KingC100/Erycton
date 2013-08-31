@@ -27,13 +27,13 @@ public class Writer {
 			
 			// 日付取得.
 			String[] dt = util.getDate();
-			String year	 = dt[0];
+			String year	  = dt[0];
 			String month  = dt[1];
-			String day	 	 = dt[2];
-			String dow		 = dt[3];
-			String hour 	 = dt[4];
+			String day	  = dt[2];
+			String dow	  = dt[3];
+			String hour   = dt[4];
 			String minute = dt[5];
-			String second	 = dt[6];
+			String second = dt[6];
 
 			// 出力ファイル名作成.
 			file_Name = year + month + day + Const.FILE_TXT;
@@ -44,7 +44,7 @@ public class Writer {
 			// ディレクトリパス取得.
 			String dir_path	= Const.EXPORT_PATH + battle_Type;
 			File dir				= new File(dir_path);
-			File fl					=  new File(dir_path + File.separator + file_Name);
+			File fl					= new File(dir_path + File.separator + file_Name);
 			
 			// 既に同名ファイルが存在する場合は既存ファイルへ書き込み.
 			if(fl.exists()){
@@ -96,7 +96,7 @@ public class Writer {
 		StringBuffer sb = new StringBuffer();
 		
 		// 改行文字の取得.
-		String crlf = Util.GetSeparator();
+		String crlf = util.GetSeparator();
 
 		// 同名ファイルが存在しない場合テンプレートを追加.
 		if(!(orFirst)){
@@ -155,7 +155,7 @@ public class Writer {
 			sb.append( sps );
 		}
 
-		sb.append(util.ConvertResult(resultBean));
+		sb.append(util.ConvertResult(resultBean.getResult()));
 		sb.append( sps );
 		sb.append(resultBean.getEntry_Time());
 
