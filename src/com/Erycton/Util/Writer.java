@@ -9,7 +9,7 @@ import com.Erycton.Data.ResultBean;
 
 public class Writer {
 
-	public boolean Export(ResultBean resultBean, Boolean type){
+	public boolean Export(ResultBean resultBean){
 
 	    boolean bl = false;
 		
@@ -18,6 +18,7 @@ public class Writer {
 			Util util = new Util();
 			boolean orFirst = false;	    
 			String file_Name, battle_Type;
+			boolean type = util.str_bl(resultBean.getBattle_Type());
 			
 			if(type){
 				battle_Type = Const.DOUBLE;
@@ -37,12 +38,15 @@ public class Writer {
 
 			// 出力ファイル名作成.
 			file_Name = year + month + day + Const.FILE_TXT;
+			
+			// htmlファイルで使用するファイル名をセット.
+			resultBean.setHtml_FileName(file_Name);
 
 			// Beanに年月日を投げる.	    
 			resultBean.setEntry_Time(year + Const.NEN + month + Const.GETSU + day + Const.HI + "(" + dow + ")" + " " + hour + ":" + minute + ":" + second);
 			
 			// ディレクトリパス取得.
-			String dir_path	= Const.EXPORT_PATH + battle_Type;
+			String dir_path	= Const.EXPORT_PATH + battle_Type + Const.EXPORT_TXT_PATH;
 			File dir				= new File(dir_path);
 			File fl					= new File(dir_path + File.separator + file_Name);
 			
@@ -63,7 +67,7 @@ public class Writer {
 			FileOutputStream fos = new FileOutputStream(fl,true);
 			OutputStreamWriter osw = new OutputStreamWriter(fos, Const.ENCODE); // UTF-8.
 			// 書き込み.
-			osw.write(Create_Sentence(orFirst, resultBean, type));
+			osw.write(Create_Sentence(orFirst, resultBean));
 			// 出力して閉じる.
 			osw.close();
 			
@@ -86,7 +90,7 @@ public class Writer {
 	 * @param type - 対戦種別
 	 * @return
 	 */
-	public String Create_Sentence(boolean orFirst, ResultBean resultBean, Boolean type){
+	public String Create_Sentence(boolean orFirst, ResultBean resultBean){
 		
 		Util util = new Util();
 		Reader reader = new Reader();
@@ -94,6 +98,7 @@ public class Writer {
 		String bar  = reader.propReader(Const.EXPORT_PARTITION_BAR);
 		String str  = null;
 		StringBuffer sb = new StringBuffer();
+		boolean type = util.str_bl(resultBean.getBattle_Type());
 		
 		// 改行文字の取得.
 		String crlf = util.GetSeparator();
